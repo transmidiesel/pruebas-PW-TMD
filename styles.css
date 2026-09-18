@@ -321,6 +321,82 @@ section{padding:100px 0;}
 .news-card h3{font-family:var(--font-display);font-size:18px;font-weight:600;margin:0;line-height:1.3;color:var(--text-primary);}
 .news-card .news-body{padding:20px 26px 28px;color:var(--metal-light);font-size:14.5px;line-height:1.7;flex:1;}
 
+/* ---------- Instagram feed (Elfsight) ---------- */
+.instagram-embed{
+  padding:28px;
+  border-radius:22px;
+  overflow:hidden;
+}
+.instagram-embed .elfsight-app-5a9c6da2-5e0c-4a73-8bdc-f1e49661961f{
+  min-height:200px;
+}
+/* Ajuste visual por si Elfsight hereda fondo oscuro propio */
+.instagram-embed iframe,
+.instagram-embed .eapps-instagram-feed{
+  border-radius:14px;
+  overflow:hidden;
+}
+@media (max-width:640px){
+  .instagram-embed{padding:16px;}
+}
+
+/* ---------- Sedes unificadas (info + mapa) ---------- */
+.sede-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  margin-bottom:22px;
+}
+@media (max-width:900px){ .sede-grid{grid-template-columns:1fr;} }
+
+.sede-card{
+  padding:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.sede-info{
+  padding:30px 30px 22px;
+  border-bottom:1px solid var(--glass-border);
+}
+.sede-info .sede-kicker{
+  color:var(--accent-bright);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.3px;
+  margin-bottom:10px;
+  display:block;
+}
+.sede-info h3{
+  font-family:var(--font-display);
+  font-size:20px;
+  margin:0 0 14px;
+  color:var(--text-primary);
+}
+.sede-line{
+  display:flex;
+  gap:10px;
+  margin-bottom:8px;
+  color:var(--metal-light);
+  font-size:14.5px;
+}
+.sede-line .ic{color:var(--accent-bright);flex-shrink:0;}
+
+.sede-map{
+  padding:16px;
+}
+.sede-map iframe{
+  width:100%;
+  height:300px;
+  border:0;
+  border-radius:12px;
+  display:block;
+}
+@media (max-width:640px){
+  .sede-map iframe{height:240px;}
+}
+
 /* ---------- Locations / Contacts ---------- */
 .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
 @media (max-width:900px){.loc-grid{grid-template-columns:1fr;}}
@@ -444,6 +520,7 @@ footer{
 .wa-bubble{background:var(--glass-bg-strong);border-radius:14px 14px 14px 4px;padding:12px 14px;margin-bottom:10px;}
 .wa-bubble strong{color:var(--text-primary);}
 .wa-fab{
+  position:relative;       /* <- para que el ::after se ancle al botón */
   width:60px;height:60px;border-radius:50%;
   background:linear-gradient(180deg,var(--accent-bright),var(--accent));
   display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -452,6 +529,7 @@ footer{
   transition:transform .35s var(--ease);
 }
 .wa-fab:hover{transform:scale(1.06) translateY(-2px);}
+.wa-fab svg{width:28px;height:28px;}
 
 /* Puente invisible entre el botón y los íconos para que no se pierda el hover al subir el cursor */
 .wa-fab::after{
@@ -459,12 +537,11 @@ footer{
   position:absolute;
   right:0;
   left:0;
-  bottom:100%;           /* se extiende hacia arriba desde el botón */
-  height:20px;           /* cubre el hueco entre el botón y los íconos */
+  bottom:100%;
+  height:20px;
   background:transparent;
   pointer-events:auto;
 }
-.wa-fab svg{width:28px;height:28px;}
 
 /* Skip link / focus */
 a:focus-visible, button:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;}
