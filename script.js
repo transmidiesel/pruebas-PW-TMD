@@ -54,3 +54,23 @@ burger.addEventListener('click', ()=>{
 const waFab = document.getElementById('waFab');
 const waPanel = document.getElementById('waPanel');
 waFab.addEventListener('click', ()=> waPanel.classList.toggle('open'));
+
+// ---- Carrusel de sectores (solo existe en quienes-somos.html) ----
+const sectorCarousel = document.getElementById('sectorCarousel');
+if (sectorCarousel) {
+  const slides = sectorCarousel.querySelectorAll('.sector-slide');
+  const dots = sectorCarousel.querySelectorAll('.sector-dot');
+  const nameEl = document.getElementById('sectorName');
+  let current = 0;
+
+  function showSector(index){
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    if (nameEl && slides[index]) nameEl.textContent = slides[index].dataset.sector;
+  }
+
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    showSector(current);
+  }, 4500);
+}
