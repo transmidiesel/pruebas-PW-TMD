@@ -19,16 +19,13 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   document.addEventListener('mouseleave', ()=>glow.classList.remove('active'));
 }
 
-// ---- Scroll reveal ----
+// ---- Scroll reveal (bidireccional: aparece al bajar, se oculta al subir) ----
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(en=>{
-    if(en.isIntersecting){
-      en.target.classList.add('visible');
-      io.unobserve(en.target);
-    }
+    en.target.classList.toggle('visible', en.isIntersecting);
   });
-}, {threshold:0.15});
+}, {threshold:0.15, rootMargin:'0px 0px -6% 0px'});
 revealEls.forEach(el=>io.observe(el));
 
 // ---- Magnetic buttons ----
@@ -74,3 +71,133 @@ if (sectorCarousel) {
     showSector(current);
   }, 4500);
 }
+// ---- Contador animado de indicadores (bidireccional: se reinicia al salir, se anima al volver a entrar) ----
+const counters = document.querySelectorAll('.count');
+
+if (counters.length) {
+  const runningAnims = new WeakMap();
+
+  const animateCounter = (el) => {
+    const target = parseInt(el.dataset.target, 10);
+    if (isNaN(target)) return;
+
+    // Si ya hay una animación corriendo sobre este elemento, la cancelamos primero
+    const prevId = runningAnims.get(el);
+    if (prevId) cancelAnimationFrame(prevId);
+
+    const duration = 1600;          // duración total en ms
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easing suave (easeOutCubic)
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.floor(eased * target);
+      el.textContent = value.toLocaleString('es-CO');
+
+      if (progress < 1) {
+        const id = requestAnimationFrame(step);
+        runningAnims.set(el, id);
+      } else {
+        el.textContent = target.toLocaleString('es-CO');
+        runningAnims.delete(el);
+      }
+    };
+
+    const id = requestAnimationFrame(step);
+    runningAnims.set(el, id);
+  };
+
+  const resetCounter = (el) => {
+    const id = runningAnims.get(el);
+    if (id) cancelAnimationFrame(id);
+    runningAnims.delete(el);
+    el.textContent = '0';
+  };
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+      } else {
+        resetCounter(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  counters.forEach(c => counterObserver.observe(c));
+}
+// ---- Pop-up escalonado para marcas y certificaciones (bidireccional) ----
+const revealPops = document.querySelectorAll('.reveal-pop');
+if (revealPops.length) {
+  const popObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.15, rootMargin:'0px 0px -6% 0px' });
+
+  revealPops.forEach(el => popObserver.observe(el));
+}
+
+// ---- Hero: video de fondo + texto controlados por scroll ----
+(function(){
+  const heroScroll = document.getElementById('inicio');
+  const heroVideo   = document.getElementById('heroVideo');
+  const scrollHint  = document.getElementById('heroScrollHint');
+  const stages      = document.querySelectorAll('.hero-stage');
+  if (!heroScroll || !heroVideo) return;
+
+  let duration = 0;
+  let ticking  = false;
+
+  const onMeta = () => { duration = heroVideo.duration || 0; };
+  heroVideo.addEventListener('loadedmetadata', onMeta);
+  if (heroVideo.readyState >= 1) onMeta();
+  heroVideo.pause(); // el video nunca se reproduce solo: se "escrubea" con el scroll
+
+  function update(){
+    ticking = false;
+
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const start = heroScroll.offsetTop;
+    const total = heroScroll.offsetHeight - window.innerHeight; // recorrido real del sticky
+    if (total <= 0) return;
+
+    let progress = (scrollTop - start) / total;
+    progress = Math.min(Math.max(progress, 0), 1);
+
+    // Escrubea el video de forma continua y suave según el progreso
+    if (duration) {
+      const targetTime = progress * duration;
+      if (Math.abs(heroVideo.currentTime - targetTime) > 0.01) {
+        try { heroVideo.currentTime = targetTime; } catch(e){}
+      }
+    }
+
+    // Cada bloque de texto aparece/desaparece de forma continua en su propia ventana de progreso
+    stages.forEach(el => {
+      const stage = parseInt(el.dataset.stage, 10) || 1;
+      const windowStart = (stage - 1) * 0.14;
+      const windowLen   = 0.26;
+      let t = (progress - windowStart) / windowLen;
+      t = Math.min(Math.max(t, 0), 1);
+      el.style.opacity = t;
+      el.style.transform = `translateY(${(1 - t) * 26}px)`;
+    });
+
+    // La pista de "desplázate para explorar" se desvanece apenas empiezas a bajar
+    if (scrollHint) scrollHint.style.opacity = Math.max(1 - progress * 6, 0);
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+  }, {passive:true});
+
+  window.addEventListener('load', update);
+  window.addEventListener('resize', update);
+  update();
+})();

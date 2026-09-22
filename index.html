@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" sizes="32x32" href="logos/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="logos/favicon_io/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="logos/favicon_io/apple-touch-icon.png">
+<link rel="manifest" href="logos/favicon_io/site.webmanifest">
 </head>
 <body>
 
@@ -20,13 +24,13 @@
   <div class="wrap nav-inner">
     <div class="logo-wrap">
       <div class="logo-box">
-        <img src="Logo.png" alt="Transmidiesel" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="logos/Logo.png" alt="Transmidiesel" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="logo-fallback" style="display:none;">LOGO<br>.PNG</div>
       </div>
     </div>
     <nav class="links">
       <a href="#inicio">Inicio</a>
-      <a href="quienes-somos.html">Quiénes Somos</a>
+      <a href="quienes-somos/">Quiénes Somos</a>
       <a href="#servicios">Servicios</a>
       <a href="#productos">Productos</a>
       <a href="#contacto">Contáctenos</a>
@@ -38,29 +42,28 @@
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
-<section class="hero" id="inicio">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow-line"><span class="dot"></span>Ingeniería diésel para el sector industrial</div>
-      <h1 class="hero-title">
+<!-- ================= HERO CON VIDEO CONTROLADO POR SCROLL ================= -->
+<section class="hero-scroll" id="inicio">
+  <div class="hero-pin">
+    <video id="heroVideo" class="hero-video" src="barco.mp4" muted playsinline webkit-playsinline="true" preload="auto"></video>
+    <div class="hero-video-overlay"></div>
+
+    <div class="wrap hero-content">
+      <div class="eyebrow-line hero-stage" data-stage="1"><span class="dot"></span>Ingeniería diésel para el sector industrial</div>
+      <h1 class="hero-title hero-stage" data-stage="2">
         <span class="reveal-line"><span class="reveal-inner">Potencia, precisión</span></span>
         <span class="reveal-line"><span class="reveal-inner">y respaldo técnico.</span></span>
       </h1>
-      <p class="hero-sub">
+      <p class="hero-sub hero-stage" data-stage="3">
         Transmidiesel S.A.S, líder en importación y comercialización de equipos industriales y servicios de mantenimiento, respalda diversos sectores con marcas reconocidas globalmente. Nuestro equipo altamente calificado y nuestras instalaciones garantizan soluciones integrales, respaldadas por un amplio stock de productos. Confía en nuestra experiencia para satisfacer tus necesidades.
       </p>
-      <div class="hero-ctas">
+      <div class="hero-ctas hero-stage" data-stage="4">
         <a href="#contacto" class="neu-btn primary magnetic">Solicitar asesoría</a>
         <a href="#marcas" class="neu-btn magnetic">Ver catálogo de marcas</a>
       </div>
     </div>
-    <div class="hero-visual glass">
-      <img class="banner-img" src="Banner-TMD-Nuevo.png" alt="Transmidiesel" onerror="this.style.display='none';">
-      <div class="img-fallback">BANNER-TMD-NUEVO</div>
-      <div class="glass-tag glass">Equipos · Repuestos · Servicio técnico</div>
-      <div class="float-card c1 glass">⚙ Soporte técnico especializado</div>
-    </div>
+
+    <div class="hero-scroll-hint" id="heroScrollHint"><span></span>Desplázate para explorar</div>
   </div>
 </section>
 
@@ -69,23 +72,22 @@
   <div class="wrap">
     <div class="stats-grid">
       <div class="stat-card glass reveal">
-        <div class="stat-num">30<span class="plus">+</span></div>
+        <div class="stat-num"><span class="plus"></span><span class="count" data-target="32">0</span></div>
         <div class="stat-label">Años de Experiencia</div>
       </div>
       <div class="stat-card glass reveal">
-        <div class="stat-num">30<span class="plus">+</span></div>
-        <div class="stat-label">Clientes</div> 
+        <div class="stat-num"><span class="plus">+</span><span class="count" data-target="1000">0</span></div>
+        <div class="stat-label">Clientes</div>
       </div>
       <div class="stat-card glass reveal">
-        <div class="stat-num">— <span class="plus">+</span></div>
+        <div class="stat-num"><span class="plus">+</span><span class="count" data-target="3500">0</span></div>
         <div class="stat-label">Productos en Stock</div>
       </div>
       <div class="stat-card glass reveal">
-        <div class="stat-num">— <span class="plus">+</span></div>
+        <div class="stat-num"><span class="plus">+</span><span class="count" data-target="5000">0</span></div>
         <div class="stat-label">Servicios Realizados</div>
       </div>
     </div>
-    <p style="color:var(--metal-light);font-size:13px;margin-top:18px;">* Reemplaza el guion por la cifra real de cada indicador.</p>
   </div>
 </section>
 
@@ -95,29 +97,67 @@
     <div class="section-head reveal">
       <span class="kicker">Catálogo</span>
       <h2>Nuestras Marcas</h2>
-      <p>Toque las marcas para ir a nuestro catálogo de productos.</p>
+      <p>Toque las marcas para conocer más sobre cada una.</p>
     </div>
-    <div class="chip-grid">
-      <a href="#" class="chip glass reveal">
-        <div class="mark">OXE</div>
-        <div class="name">OXE Marine</div>
-        <div class="tag">Motores diésel fuera de borda</div>
+    <div class="marcas-grid">
+
+      <!-- OXE: enlace externo directo -->
+      <a href="https://oxecolombia.com/" target="_blank" rel="noopener" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Oxe.png" alt="OXE Marine"></div>
       </a>
-      <a href="#" class="chip glass reveal">
-        <div class="mark">DMX</div>
-        <div class="name">Duramax®</div>
-        <div class="tag">Distribución internacional</div>
+
+      <a href="marcas/duramax/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Duramax.png" alt="Duramax"></div>
       </a>
-      <a href="#" class="chip glass reveal">
-        <div class="mark">＋</div>
-        <div class="name">Marca</div>
-        <div class="tag">Espacio disponible</div>
+
+      <a href="marcas/twindisc/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/twindisc.png" alt="Twin Disc"></div>
       </a>
-      <a href="#" class="chip glass reveal">
-        <div class="mark">＋</div>
-        <div class="name">Marca</div>
-        <div class="tag">Espacio disponible</div>
+
+      <a href="marcas/ancor/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Ancor.png" alt="Ancor"></div>
       </a>
+
+      <a href="marcas/glendinning/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Glendining.png" alt="Glendinning"></div>
+      </a>
+
+      <a href="marcas/johnson/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Johnson.png" alt="SPX Flow"></div>
+      </a>
+
+      <a href="marcas/marinco/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Marinco.png" alt="Marinco"></div>
+      </a>
+
+      <a href="marcas/mcbee/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/mcbee.png" alt="McBee"></div>
+      </a>
+
+      <a href="marcas/michigan/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Michigan.png" alt="Michigan Wheel"></div>
+      </a>
+
+      <a href="marcas/newmar/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/NewMar.png" alt="NewMar"></div>
+      </a>
+
+      <a href="marcas/sam/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/SAM.png" alt="S.A. M-Tech Co"></div>
+      </a>
+
+      <a href="marcas/super-lube/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/Super-Lube.png" alt="Super Lube"></div>
+      </a>
+
+      <a href="marcas/veth/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/veth.png" alt="Veth Propulsion"></div>
+      </a>
+
+      <a href="marcas/vetus/" class="marca-card glass reveal-pop">
+        <div class="marca-logo"><img src="logos/Marcas aliadas/vetus.png" alt="Vetus"></div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -130,11 +170,28 @@
       <h2>Certificaciones y Licencias</h2>
       <p>Toque los logos para validar las certificaciones y licencias.</p>
     </div>
-    <div class="chip-grid">
-      <a href="#" class="chip glass reveal"><div class="mark">✓</div><div class="name">Certificación</div><div class="tag">Espacio disponible</div></a>
-      <a href="#" class="chip glass reveal"><div class="mark">✓</div><div class="name">Certificación</div><div class="tag">Espacio disponible</div></a>
-      <a href="#" class="chip glass reveal"><div class="mark">✓</div><div class="name">Certificación</div><div class="tag">Espacio disponible</div></a>
-      <a href="#" class="chip glass reveal"><div class="mark">✓</div><div class="name">Certificación</div><div class="tag">Espacio disponible</div></a>
+    <div class="cert-grid">
+
+      <a href="https://drive.google.com/file/d/1tUCS5XpRbFDOzavGLTw8GLl5oagov1KM/view" target="_blank" rel="noopener" class="cert-card glass reveal-pop">
+        <div class="cert-logo"><img src="Certificados/coface.png" alt="Coface"></div>
+      </a>
+
+      <a href="https://drive.google.com/file/d/19A8tL2YiLWpuYOBLWedSsei4WFTLczVw/view" target="_blank" rel="noopener" class="cert-card glass reveal-pop">
+        <div class="cert-logo"><img src="Certificados/par.png" alt="PAR"></div>
+      </a>
+
+      <a href="https://drive.google.com/file/d/1pvsPGOfZW7c02YCRyURUdB-tuwCg8caQ/view" target="_blank" rel="noopener" class="cert-card glass reveal-pop">
+        <div class="cert-logo"><img src="Certificados/dimar logo.png" alt="DIMAR"></div>
+      </a>
+
+      <a href="https://www.sgs.com/en/certified-clients-and-products/verify-certificate?id=5d58a8f4-052a-4752-a21d-c325ac1fa388" target="_blank" rel="noopener" class="cert-card glass reveal-pop">
+        <div class="cert-logo"><img src="Certificados/ISO-9001.png" alt="ISO 9001"></div>
+      </a>
+
+      <a href="https://www.sgs.com/en/certified-clients-and-products/verify-certificate?id=2b3816a8-7ab1-468b-b4c7-d334e0a2586e" target="_blank" rel="noopener" class="cert-card glass reveal-pop">
+        <div class="cert-logo"><img src="Certificados/ISO-14001.png" alt="ISO 14001"></div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -206,19 +263,19 @@
   </div>
 </section>
 
-<!-- ================= INSTAGRAM ================= -->
+<!-- ================= REDES SOCIALES (WIDGET CONSOLIDADO) ================= -->
 <section id="instagram">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="kicker">Síguenos</span>
       <h2>Nuestras últimas publicaciones</h2>
-      <p>Conéctate con Transmidiesel en Instagram: novedades, proyectos, eventos y todo lo que hacemos día a día.</p>
+      <p>Conéctate con Transmidiesel en todas nuestras redes sociales: novedades, proyectos, eventos y todo lo que hacemos día a día.</p>
     </div>
 
     <div class="instagram-embed glass reveal">
-      <!-- Elfsight Instagram Feed | Transmidiesel -->
+      <!-- Elfsight Social Feed | Transmidiesel -->
       <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-5a9c6da2-5e0c-4a73-8bdc-f1e49661961f" data-elfsight-app-lazy></div>
+      <div class="elfsight-app-db956738-2108-423d-a9db-ce5b99009da3" data-elfsight-app-lazy></div>
     </div>
 
     <div style="text-align:center;margin-top:32px;">
@@ -275,7 +332,7 @@
       </div>
       <div class="contact-card glass reveal">
         <div class="role">Comercial · Cali</div>
-        <div class="person">Juan Sebastián Hernández</div>
+        <div class="person">Oscar Asesor Comercial</div>
         <div class="phone">+57 316 522 0137</div>
       </div>
       <div class="contact-card glass reveal">
@@ -310,7 +367,7 @@
       <div>
         <div class="logo-wrap" style="margin-bottom:16px;">
           <div class="logo-box">
-            <img src="Logo.png" alt="Transmidiesel" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="logos/Logo.png" alt="Transmidiesel" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="logo-fallback" style="display:none;">LOGO<br>.PNG</div>
           </div>
         </div>
@@ -322,7 +379,7 @@
         <h4>Navegación</h4>
         <ul>
           <li><a href="#inicio">Inicio</a></li>
-          <li><a href="quienes-somos.html">Quiénes Somos</a></li>
+          <li><a href="quienes-somos/">Quiénes Somos</a></li>
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#productos">Productos</a></li>
           <li><a href="#contacto">Contáctenos</a></li>
@@ -361,7 +418,7 @@
   <div class="wa-panel glass" id="waPanel">
     <div class="wa-head">
       <div class="wa-logo">
-        <img src="Logo.png" alt="Transmidiesel" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="logos/favicon_io/android-chrome-512x512.png" alt="Transmidiesel" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="logo-fallback" style="display:none;font-size:8px;">LOGO</div>
       </div>
       <div>
